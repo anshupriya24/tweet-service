@@ -49,7 +49,6 @@ public class TweetController {
 	/**
 	 * This endpoint is used to add the tweet
 	 * 
-	 * @param TweetRequest This is the paramter which contain the username
 	 * @return Success This returns the success message after insert.
 	 */
 	@Operation(summary = "Add users tweets", description = "Add users tweets", tags = { "tweet" })
