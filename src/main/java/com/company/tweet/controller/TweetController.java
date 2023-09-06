@@ -1,35 +1,18 @@
 package com.company.tweet.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.company.tweet.dto.Problem;
-import com.company.tweet.dto.Success;
-import com.company.tweet.dto.TweetDetailsPageResponse;
-import com.company.tweet.dto.TweetDetailsResponse;
-import com.company.tweet.dto.TweetPageRequest;
-import com.company.tweet.dto.TweetRequest;
-import com.company.tweet.dto.TweetResponse;
-import com.company.tweet.exceptions.InvalidDataException;
-import com.company.tweet.services.TweetService;
-
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.tags.Tag;
-
+@CrossOrigin(
+    origins = {
+        "http://localhost:3000", 
+        "https://staging.example.com", 
+        "https://app.example.com"
+        },
+    methods = {
+                RequestMethod.OPTIONS,
+                RequestMethod.GET,
+                RequestMethod.PUT,
+                RequestMethod.DELETE,
+                RequestMethod.POST
+})
 @RestController
 @RequestMapping("/api/v1")
 @Tag(name = "tweet", description = "Tweet API")
