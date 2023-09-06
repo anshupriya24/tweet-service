@@ -1,6 +1,21 @@
-FROM openjdk:11
-VOLUME /tmp
-EXPOSE 8080
-ARG JAR_FILE=target/tweet.service-0.0.1-SNAPSHOT.jar
-ADD ${JAR_FILE} app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
+# Docker Build Stage
+FROM adoptopenjdk/maven-openjdk11 AS build
+
+
+# Build Stage
+WORKDIR /opt/app
+
+COPY ./ /opt/app
+RUN mvn clean install
+
+
+# Docker Build Stage
+FROM adoptopenjdk/openjdk11:latest
+
+COPY --from=build /opt/app/target/*.jar app.jar
+
+ENV PORT 8081
+EXPOSE $PORT
+
+ENTRYPOINT ["java","-jar","-Xmx1024M","-Dserver.port=${PORT}","app.jar"]
+
