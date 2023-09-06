@@ -87,22 +87,6 @@ public class TweetController {
 		return new ResponseEntity<>(tweetDetails, HttpStatus.OK);
 	}
 
-	/**
-	 * This endpoint is used to get other users tweet page
-	 * 
-	 * @param username This is the paramter which contain the username
-	 * @return TweetResponse This returns the list of tweet of other users.
-	 */
-	@Operation(summary = "Get other users tweets", description = "Get other users tweets", tags = { "tweet" })
-	@ApiResponses(value = {
-			@ApiResponse(responseCode = "200", description = " Other users tweet list", content = @Content(schema = @Schema(implementation = TweetDetailsPageResponse.class))),
-			@ApiResponse(responseCode = "400", description = "Username is of invalid length", content = @Content(schema = @Schema(implementation = Problem.class))) })
-	@GetMapping(value = "/tweets/others", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<TweetDetailsPageResponse> getOthersTweetPage(@RequestParam String username,
-			@RequestParam String page, @RequestParam String size) throws InvalidDataException {
-		LOG.info("[Inside getOthersTweet function]");
-		TweetDetailsPageResponse tweetDetails = tweetService.getOthersTweetPage(username, page, size);
-		return new ResponseEntity<>(tweetDetails, HttpStatus.OK);
-	}
+	
 
 }
