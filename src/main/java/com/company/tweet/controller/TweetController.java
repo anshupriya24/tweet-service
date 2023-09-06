@@ -24,19 +24,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-@CrossOrigin(
-		origins = {
-				"http://localhost:4200",
-				"https://staging.example.com",
-				"https://app.example.com"
-		},
-		methods = {
-				RequestMethod.OPTIONS,
-				RequestMethod.GET,
-				RequestMethod.PUT,
-				RequestMethod.DELETE,
-				RequestMethod.POST
-		})
+@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/v1")
 @Tag(name = "tweet", description = "Tweet API")
