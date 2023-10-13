@@ -7,9 +7,6 @@ WORKDIR /opt/app
 COPY ./ /opt/app
 RUN mvn clean install
 
-FROM sonarqube:8.9-community
-COPY sonar-custom-plugin-1.0.jar /opt/sonarqube/extensions/
-
 # Docker Build Stage
 FROM adoptopenjdk/openjdk11:latest
 
