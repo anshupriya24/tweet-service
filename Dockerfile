@@ -5,8 +5,9 @@ FROM adoptopenjdk/maven-openjdk11 AS build
 WORKDIR /opt/app
 
 COPY ./ /opt/app
-RUN mvn clean install
 RUN mvn clean test
+RUN mvn clean install
+
 
 # Docker Build Stage
 FROM adoptopenjdk/openjdk11:latest
