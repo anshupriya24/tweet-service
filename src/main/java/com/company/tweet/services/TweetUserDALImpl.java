@@ -15,7 +15,7 @@ import org.springframework.data.repository.support.PageableExecutionUtils;
 import org.springframework.stereotype.Repository;
 
 import com.company.tweet.data.Tweet;
-
+import org.springframework.web.client.RestTemplate;
 @Repository
 public class TweetUserDALImpl implements TweetUserDAL {
 	private final static Logger LOG = LoggerFactory.getLogger(TweetUserDALImpl.class);
