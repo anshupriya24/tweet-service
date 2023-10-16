@@ -109,15 +109,6 @@ public class TweetUserDALImpl implements TweetUserDAL {
 	@Override
 	public Tweet addNewTweet(Tweet tweet) {
 		LOG.info("[Inside addNewTweet function]");
-		final String uri = "http://51.20.1.154:5000/predict_sentiment";
-
-		RestTemplate restTemplate = new RestTemplate();
-		String result = restTemplate.postForObject(uri, tweet.getText(),String.class);
-		Tweet tweet1 = new Tweet();
-		tweet1.setText(tweet.getText() + "sentiments: " + result);
-		tweet1.setAuthorId(tweet.getAuthorId());
-		tweet1.setCreatedDate(tweet.getCreatedDate());
-		tweet1.setId(tweet.getId());
 		mongoTemplate.save(tweet);
 		return tweet;
 	}
