@@ -6,28 +6,23 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.company.tweet.dto.*;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.http.HttpEntity;
+import com.company.tweet.data.Tweet;
+import org.springframework.http.MediaType;
+import com.company.tweet.exceptions.InvalidDataException;
 import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import com.company.tweet.constants.TweetConstants;
-import com.company.tweet.data.Tweet;
-import com.company.tweet.dto.Problem;
-import com.company.tweet.dto.ProblemResponse;
-import com.company.tweet.dto.Success;
-import com.company.tweet.dto.TweetDetails;
-import com.company.tweet.dto.TweetDetailsPage;
-import com.company.tweet.dto.TweetDetailsPageResponse;
-import com.company.tweet.dto.TweetDetailsResponse;
-import com.company.tweet.dto.TweetPageRequest;
-import com.company.tweet.dto.TweetRequest;
-import com.company.tweet.dto.TweetResponse;
-import com.company.tweet.exceptions.InvalidDataException;
-import com.company.tweet.util.ValidationUtil;
 
 @Service
 public class TweetServiceImpl implements TweetService {
