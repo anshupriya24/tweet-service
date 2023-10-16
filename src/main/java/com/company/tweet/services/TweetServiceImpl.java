@@ -11,7 +11,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
-
+import org.springframework.web.client.RestTemplate;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import com.company.tweet.constants.TweetConstants;
 import com.company.tweet.data.Tweet;
 import com.company.tweet.dto.Problem;
@@ -65,25 +67,40 @@ public class TweetServiceImpl implements TweetService {
 	 */
 
 	public Success addTweet(TweetRequest tweetRequest) throws InvalidDataException {
-		LOG.info("[Inside addTweet function]");
-		Success success = new Success();
-		Tweet tweet = new Tweet();
-		List<Problem> pBListOther = validationUtil.validateTweetBeforeAdd(tweetRequest);
-		if (pBListOther.isEmpty()) {
-			tweet.setAuthorId(tweetRequest.getAuthorId());
-			tweet.setCreatedDate(new Date().toString());
-			tweet.setText(tweetRequest.getText());
-			Tweet tweetOut = tweetUserDAL.addNewTweet(tweet);
-			if (null != tweetOut) {
-				success.setMessage("Tweet inserted successfully");
-			}
-		} else {
-			throw new InvalidDataException(TweetConstants.INVALID_USER_ERROR, new ProblemResponse(pBListOther));
-		}
+        LOG.info("[Inside addTweet function]");
+        Success success = new Success();
+        final String uri = "http://16.170.228.195:5000/predict_sentiment";
+        Tweet tweet = new Tweet();
+        RestTemplate restTemplate = new RestTemplate();
+        Sentiment sentiment = new Sentiment();
+        sentiment.setText(tweetRequest.getText());
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        String json="";
+        try {
+             json = ow.writeValueAsString(sentiment);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        HttpEntity<String> request = new HttpEntity<String>(json,headers);
+        Sentiments responseEntity = restTemplate.postForObject(uri,request, Sentiments.class);
+        //List<Problem> pBListOther = validationUtil.validateTweetBeforeAdd(tweetRequest);
+        //if (pBListOther.isEmpty()) {
+        tweet.setAuthorId(tweetRequest.getAuthorId());
+        tweet.setCreatedDate(new Date().toString());
+        tweet.setText(tweetRequest.getText() + " :sentiments: " + responseEntity.getSentiment());
+        Tweet tweetOut = tweetUserDAL.addNewTweet(tweet);
+        if (null != tweetOut) {
+            success.setMessage("Tweet inserted successfully");
+        }
+        //} else {
+        //	throw new InvalidDataException(TweetConstants.INVALID_USER_ERROR, new ProblemResponse(pBListOther));
+        //}
 
-		return success;
+        return success;
 
-	}
+    }
 
 	/**
 	 * This method is used to get other users tweet
