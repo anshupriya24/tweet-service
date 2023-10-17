@@ -65,7 +65,7 @@ public class TweetServiceImpl implements TweetService {
 	public Success addTweet(TweetRequest tweetRequest) throws InvalidDataException {
         LOG.info("[Inside addTweet function]");
         Success success = new Success();
-        final String uri = "http://51.20.183.227:5000/predict_sentiment";
+        final String uri = "http://16.171.141.68:5000/predict_sentiment";
         Tweet tweet = new Tweet();
         RestTemplate restTemplate = new RestTemplate();
         Sentiment sentiment = new Sentiment();
